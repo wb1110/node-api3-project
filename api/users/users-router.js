@@ -1,8 +1,7 @@
 const express = require('express');
 const Users = require('./users-model');
 const Posts = require('../posts/posts-model');
-const validateUserId = require('../middleware/middleware');
-const logger = require('../middleware/middleware');
+const {logger, validateUserId} = require('../middleware/middleware');
 const { json } = require('express');
 
 // You will need `users-model.js` and `posts-model.js` both
