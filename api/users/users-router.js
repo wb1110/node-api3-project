@@ -2,6 +2,7 @@ const express = require('express');
 const Users = require('./users-model');
 const Posts = require('../posts/posts-model');
 const validateUserId = require('../middleware/middleware');
+const logger = require('../middleware/middleware');
 const { json } = require('express');
 
 // You will need `users-model.js` and `posts-model.js` both
@@ -9,7 +10,7 @@ const { json } = require('express');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/', logger, (req, res) => {
   //RETURN AN ARRAY WITH ALL THE USERS
   Users.get()
   .then(users => {
@@ -20,13 +21,13 @@ router.get('/', (req, res) => {
   })
 });
 
-router.get('/:id', validateUserId, (req, res) => {
+router.get('/:id', validateUserId, (req, res, next) => {
   // RETURN THE USER OBJECT
   Users.getById(req.params.id)
   .then(userId => {
     res.json(userId)
   })
-  .catch()
+  .catch(next)
   // this needs a middleware to verify user id
 });
 

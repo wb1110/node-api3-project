@@ -2,7 +2,12 @@ const User = require('../users/users-model')
 
 function logger(req, res, next) {
   // DO YOUR MAGIC
-  
+  const current_datetime = new Date();
+  const method = req.method;
+  const url = req.url;
+  const log = `[${current_datetime}] ${method}:${url}`;
+  console.log(log);
+  next();
 }
 
 async function validateUserId(req, res, next) {
@@ -31,4 +36,6 @@ function validatePost(req, res, next) {
 }
 
 // do not forget to expose these functions to other modules
-module.exports = validateUserId
+module.exports = 
+  logger,
+  validateUserId
