@@ -27,8 +27,20 @@ async function validateUserId(req, res, next) {
   }
 }
 
-function validateUser(req, res, next) {
+async function validateUser(req, res, next) {
   // DO YOUR MAGIC
+  try {
+    const name = await req.body.name
+    if (!name) {
+      res.status(400).json({ message: "missing required name field" })
+    } else {
+      next()
+    }
+  } catch {
+    res.status(500).json({
+      message: "problem adding user"
+    })
+  }
 }
 
 function validatePost(req, res, next) {
@@ -39,4 +51,5 @@ function validatePost(req, res, next) {
 module.exports = {
   logger,
   validateUserId,
+  validateUser
 };
